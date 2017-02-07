@@ -1,17 +1,26 @@
-body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+html, body, #container {
+    height: 100%;
 }
 
+#container {
+    min-height: 100%;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
 
+footer {
+    position: relative;
+    height: 50px;
+    margin-top: -100px;
+    text-align: center;
+    padding-top: 20px;
+}
 
+/* ---------------------- */
 
-
-
-
-
-
-
-
-
-
+#chartContainer {
+    min-height: 400px;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+}

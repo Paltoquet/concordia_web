@@ -1,0 +1,27 @@
+<div class="row">
+    <div id="chartContainer"
+         class="col-sm-12 col-md-offset-1 col-md-10">
+        Loading...
+    </div>
+</div>
+
+<script type="text/javascript">
+    $.getJSON('/api/sensor/ph', function(sensorsData) {
+        var dataPoints = []
+        $.each(sensorsData.data, function(index, sensorData) {
+            dataPoints.push({
+                x: moment(sensorData.sensor_time).toDate(), 
+                y: parseFloat(sensorData.sensor_value)
+            })
+        })
+
+        $("#chartContainer").CanvasJSChart({
+            title: { text: "Ph meter" },
+            axisX: { interval: 10 },
+            data: [{
+                type: "line",
+                dataPoints: dataPoints
+            }]
+        })
+    })
+</script>

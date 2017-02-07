@@ -7,6 +7,8 @@ app = Flask(__name__)
 # ------------------------- #
 # ---------- API ---------- #
 
+# --- Sensors --- #
+
 @app.route('/api/sensor', methods=['GET'])
 def get_sensors():
     # Get all sensors values
@@ -33,6 +35,21 @@ def put_sensor(sensor_name):
     )
 
     return jsonify(status='OK')
+
+# --- Configuration --- #
+
+@app.route('/api/config', methods=['GET'])
+def get_config():
+    # Get configuration
+    sqlConfig = db.query('SELECT * FROM config')
+
+    # Map configuration to key/value
+    config = {}
+    for sqlConf in sqlConfig:
+        config[sqlConf.get('config_key')] = sqlConf.get('config_value')
+
+    # Get all values for the configuration
+    return jsonify(config=config)
 
 # --------------------------- #
 # ---------- INDEX ---------- #
