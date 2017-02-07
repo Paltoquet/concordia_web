@@ -10,14 +10,14 @@ app = Flask(__name__)
 @app.route('/api/sensor', methods=['GET'])
 def get_sensors():
     # Get all sensors values
-    return jsonify(sensors=db.query(
+    return jsonify(data=db.query(
         'SELECT * FROM sensors ORDER BY sensor_time DESC'
     ))
 
 @app.route('/api/sensor/<sensor_name>', methods=['GET'])
 def get_sensor(sensor_name):
     # Get all values for the specified sensor
-    return jsonify(sensors=db.query(
+    return jsonify(data=db.query(
         'SELECT * FROM sensors WHERE sensor_name = ? ORDER BY sensor_time DESC',
         [ sensor_name ]
     ))
@@ -27,7 +27,7 @@ def put_sensor(sensor_name):
     body = request.get_json()
     
     # Insert new value in database
-    db.query(
+    db.insert(
         'INSERT INTO sensors (sensor_name, sensor_value, sensor_time) VALUES (?, ?, ?)',
         [ sensor_name, body.get('value'), datetime.now() ]
     )
