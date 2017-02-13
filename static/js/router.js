@@ -4,8 +4,8 @@ $(function() {
         this.use('Template')
 
         // Index
-        this.get('#/', function(context) {
-            context.render('/static/html/phMeter.html')
+        this.get('#/sensor/:sensor', function(context) {
+            context.render('/sensor/' + this.params.sensor + '.html')
                 .replace(context.$element());
         })     
 

@@ -51,13 +51,32 @@ def get_config():
     # Get all values for the configuration
     return jsonify(config=config)
 
-# --------------------------- #
-# ---------- INDEX ---------- #
+    
+@app.route('/api/config', methods=['POST'])
+def post_config():
+    # Update all configurations
+    for key, value in request.form.items():
+        db.insert(
+            'UPDATE config SET config_value=? WHERE config_key=?',
+            [value, key]
+        )
+
+    return jsonify(status='OK')
+
+# -------------------------- #
+# ---------- HTML ---------- #
         
 @app.route('/', methods=['GET'])
-def get_index():
-    db.get()
-    return render_template('index.html')
+def get_index_view():
+    # Get all existing sensors
+    sqlSensorNames = db.query('SELECT DISTINCT sensor_name FROM sensors')
+    sensor_names = [ sensor.get('sensor_name') for sensor in sqlSensorNames ]
+
+    return render_template('index.html', sensors=sensor_names)
+        
+@app.route('/sensor/<sensor>.html', methods=['GET'])
+def get_sensor_view(sensor):
+    return render_template('sensor.html', sensor=sensor)
 
 # -------------------------- #
 

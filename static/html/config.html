@@ -1,1 +1,27 @@
-CONFIGURATION
+<h1>Configuration</h1>
+<h3 id="message" class="text-center text-success"></h3>
+<form id="config" class="row" name="config" method="post" action="#"></form>
+<script type="text/javascript">
+    $.getJSON('/api/config', function(config) {
+        config = config.config
+        form = $('#config')
+
+        // Generate fields
+        form.empty()
+        $.each(config, function(key, value) {
+            form.append('<label class="col-md-offset-2 col-md-2" for="' + key + '">' + key + '</label>')
+            form.append(
+            '<div class="col-md-8"><input type="text" id="' + key + '" name="' + key + '" value="' + value + '"/></div>')
+        })
+        form.append('<div class="col-md-12 text-center"><input type="submit" value="Update configuration !"/></div>')
+
+        // Post configuration
+        form.submit(function(event) {
+            event.preventDefault();
+            // Send the data using post
+            $.post('/api/config', form.serialize()).done(function() {
+                $('#message').html('Configuration updated !')
+            })
+        })
+    })
+</script>

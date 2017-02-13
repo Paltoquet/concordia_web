@@ -6,8 +6,10 @@
 </div>
 
 <script type="text/javascript">
-    $.getJSON('/api/sensor/ph', function(sensorsData) {
+    $.getJSON('/api/sensor/{{ sensor }}', function(sensorsData) {
         var dataPoints = []
+        
+        // Get data values
         $.each(sensorsData.data, function(index, sensorData) {
             dataPoints.push({
                 x: moment(sensorData.sensor_time).toDate(), 
@@ -15,11 +17,15 @@
             })
         })
 
-        $("#chartContainer").CanvasJSChart({
-            title: { text: "Ph meter" },
-            axisX: { interval: 10 },
+        // Generate the chart
+        $('#chartContainer').CanvasJSChart({
+            title: { text: '{{ sensor | title }}' },
+            axisX:{      
+                valueFormatString: 'DD/MM HH:mm',
+                labelAngle: -30
+            },
             data: [{
-                type: "line",
+                type: 'line',
                 dataPoints: dataPoints
             }]
         })

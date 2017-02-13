@@ -18,7 +18,14 @@
             <div class="navbar-header">
               <a class="navbar-brand" href="/#/">Concordia</a>
               <ul class="nav navbar-nav">
-                <li><a href="/#/">PH Meter</a></li>
+                <li class="dropdown">
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">Sensors<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        {% for sensor in sensors %}
+                        <li><a href="#/sensor/{{ sensor }}">{{ sensor | title }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
                 <li><a href="/#/config">Configuration</a></li>
                 <li><a href="/#/test">Test</a></li>
               </ul>
